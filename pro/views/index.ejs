@@ -19,11 +19,9 @@
     </div>
 </header>
 <!--时间-->
-<section class="publicTime">
-    <span id="time">2015年1月1日 11:11  星期一</span>
-    <a href="#">温馨提示：为了能正常浏览，请使用高版本浏览器！（IE10+）</a>
-</section>
-<!--主体内容-->
+
+            
+  <% if(name){ %>
 <section class="publicMian">
     <div class="left">
         <h2 class="leftH2"></span>功能列表</span></h2>
@@ -43,10 +41,26 @@
             <p>欢迎来到超市账单管理系统!</p>
 			      <span id="hours"></span>
         </div>
+       
+    </div>
+</section>
+<% }else{ %>
+<section class="publicMian">
+    <div class="left">
+        <h2 class="leftH2"></span>功能列表</span></h2>
+        
+</div>
+<div class="right">
+        <img class="wColck" src="images/clock.jpg" alt=""/>
         <button class="btn btn-success" onclick="location.href='/login'">登录</button>
 	    <button class="btn btn-primary" onclick="location.href='/register'">注册</button>
     </div>
 </section>
+<% } %>
+
+
+
+
 <footer class="footer">
 </footer>
 <div style="text-align:center;">
