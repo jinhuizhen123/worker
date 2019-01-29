@@ -1,0 +1,161 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>超市账单管理系统</title>
+    <script src="/javascripts/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style1.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css'/>
+    <link rel="stylesheet" href="/stylesheets/public.css"/>
+</head>
+<body>
+<!--头部-->
+    <header class="publicHeader">
+        <h1>超市账单管理系统</h1>
+        <div class="publicHeaderR">
+            <a href="/">退出</a>
+        </div>
+    </header>
+<!--时间-->
+    <section class="publicTime"> 
+        <a href="#">温馨提示：为了能正常浏览，请使用高版本浏览器！（IE10+）</a>
+    </section>
+<!--主体内容-->
+    <section class="publicMian ">
+        <div class="left">
+            <h2 class="leftH2">功能列表</h2>
+            <nav>
+                <ul class="list">
+                    <li id="active"><a href="billList.html">账单管理</a></li>
+                    <li ><a href="/billList">账单管理</a></li>
+                    <li ><a href="/billList">账单管理</a></li>
+                    <li><a href="/login">退出系统</a></li>
+                </ul>
+            </nav>
+        </div>
+            <!--账单表格 样式和供应商公用-->             
+    <div class="right">
+            <div class="search">
+                <span>供应商名称：</span>
+                <input type="text" class="txt" placeholder="请输入供应商的名称"/>
+                <a href="javascript:void(0);" class="selection">查询</a>
+            </div>
+        <div class="providerAdd">
+            <form action="#">
+                <div>
+                    <label for="shopper">供应商：</label>
+                    <input type="text" name="shopper" id="shopper" placeholder=""/>
+                </div>
+                <div>
+                    <label for="crash">账单金额：</label>
+                    <input type="text" name="crash" id="crash" placeholder=""/>
+                </div>
+                <div>
+                    <label for="cost">是否付款：</label>
+                    <input type="text" name="cost" id="cost" placeholder=""/>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                      <button class="btn btn-primary" id="sub">增加供应商</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+      <table class="providerTable">
+        <tr class="firstTr"> 
+            <th width="10%" id="code" class="code1">账单编码</th>
+            <th width="10%">供应商</th>
+            <th width="10%">账单金额</th>
+            <th width="10%" >是否付款</th>
+            <th width="10%">操作</th>
+        </tr>
+          <%  data.map(function(item,i){  %>
+                <tr>
+                     <td><%- i+1%></td>
+                     <td><%- item.shopper%></td>
+                     <td><%- item.crash%></td>
+                     <td><%- item.cost%></td>
+                     <td>
+                        <a href="/detail?id=<%-item._id %>"><img src="images/read.png" alt="详情" title="详情"/></a>
+                        <a href="/billListUpdate?id=<%-item._id %>" data-id1="<%-item._id %>" id="rewrite"><img src="images/xiugai.png" alt="修改" title="修改"/></a>
+                        <a href="javascript:void(0);" data-id="<%-item._id %>" id="remove" class="remove1"><img src="images/schu.png" alt="删除" title="删除"/></a>
+                    </td>
+                 </tr>   
+          <% }) %>   
+      </table>  
+      <nav aria-label="Page navigation">
+        <ul class="pagination">
+          <li>
+            <a href="/billList?pageNo=<%-pageNo<=1?1:parseInt(pageNo) -1 %>" aria-label="Previous">
+              <span aria-hidden="true">&laquo;上一页</span>
+            </a>
+          </li>
+          <% if(page>4){ %>
+              <li><a href="/billList?pageNo=1">1</a></li>
+          <li><a href="/billList?pageNo=2">2</a></li>
+              <li><a href="#">.....</a></li>
+              <li><a href="/billList?pageNo=<%-page-1 %>"><%-page-1 %></a></li>
+          <li><a href="/billList?pageNo=<%-page %>"><%-page %></a></li>
+          <% }else{ %>
+                  <% for(let i=0;i<page;i++){ %>
+                      <li><a href="/billList?pageNo=<%-i+1 %>"><%-i+1 %></a></li>
+                  <% } %>
+          <% } %>
+          <li>
+            <a href="/billList?pageNo=<%-pageNo>=page?page:parseInt(pageNo)+1 %>" aria-label="Next">
+              <span aria-hidden="true">&raquo;下一页</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+        </div>
+    </section>
+    <script type="text/javascript">
+        $(function(){
+            $('#sub').click(function(){
+                //发布
+		     $.ajax({
+			type:"post",
+			url:"/users/billList",
+            data:{shopper:$('#shopper').val(),crash:$('#crash').val(),cost:$('#cost').val(),caozuo:$('#caozuo').val()},
+			success:function(data){
+				if(data==1){
+					alert('发布成功')
+					location.href='/billList'
+				}else{
+					alert('发布失败')
+					location.href='/billList'
+				}
+			}
+		})
+    }) 
+        $(".remove1").click(function(){
+            //删除
+              var data={id:$(this).attr('data-id')}  
+            $.ajax({
+			 type:"get",
+			 url:"/users/billList",
+             data:data,
+			 success:function(data){
+				if(data==0){
+					alert('删除成功')
+					location.href='/billList'
+				}else{
+					alert('删除失败')
+				}
+			}
+		})
+           })
+          //搜素
+          $(".selection").click(function(){
+                // console.log('aa')
+              var str=$(".txt").val()
+              console.log(str)
+             location.href="/search?keywords="+str;
+          })
+        })
+
+    </script>
+</body>
+</html>

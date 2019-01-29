@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>超市账单管理系统</title>
+    <script src="/javascripts/jquery-1.11.0.js" type="text/javascript" charset="utf-8"></script>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style1.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css'/>
+    <link rel="stylesheet" href="/stylesheets/public.css"/>
+</head>
+<body>
+<!--头部-->
+    <header class="publicHeader">
+        <h1>超市账单管理系统</h1>
+        <div class="publicHeaderR">   
+            <a href="/billList">退出</a>
+        </div>
+    </header>
+<!--时间-->
+    <section class="publicTime"> 
+        <a href="#">温馨提示：为了能正常浏览，请使用高版本浏览器！（IE10+）</a>
+    </section>
+<!--主体内容-->
+    <section class="publicMian ">
+        <div class="left">
+            <h2 class="leftH2">功能列表</h2>
+            <nav>
+                    <ul class="list">
+                            <li id="active"><a href="billList.html">账单管理</a></li>
+                            <li ><a href="/billList">账单管理</a></li>
+                            <li ><a href="/billList">账单管理</a></li>
+                            <li><a href="/login">退出系统</a></li>
+                    </ul>
+            </nav>
+        </div>
+            <!--账单表格 样式和供应商公用-->             
+    <div class="right">
+            <div class="location">
+                    <strong>你现在所在的位置是:</strong>
+                    <span>账单管理页面 >> 账单详情页</span>
+                </div>
+        <div class="providerAdd">
+                <form action="#">
+                        <div>
+                            <label for="shopper">供应商：</label>
+                            <input type="text" name="shopper" id="shopper" value="<%-detail[0].shopper%>"/>
+                        </div>
+                        <div>
+                            <label for="crash">账单金额：</label>
+                            <input type="text" name="crash" id="crash" value="<%-detail[0].crash%>"/>
+                        </div>
+                        <div>
+                            <label for="cost">是否付款：</label>
+                            <input type="text" name="cost" id="cost" value="<%-detail[0].cost%>"/>
+                        </div>
+                    </form>     
+        </div>  
+    </section>
+<!--点击删除按钮后弹出的页面-->
+    <script type="text/javascript">
+    </script>
+</body>
+</html>
